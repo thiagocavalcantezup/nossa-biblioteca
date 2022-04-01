@@ -1,32 +1,36 @@
-package br.com.zup.edu.biblioteca.controller;
+package br.com.zup.edu.biblioteca.model;
 
-import br.com.zup.edu.biblioteca.model.Autor;
-import org.hibernate.validator.constraints.Length;
-
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-public class AutorRequest {
+import org.hibernate.validator.constraints.br.CPF;
+
+public class AutorDTO {
+
     @NotBlank
     private String nome;
 
     @NotBlank
+    @Email
     private String email;
 
     @NotBlank
-    @Length(max = 2500)
+    @Size(max = 2500)
     private String descricao;
 
     @NotBlank
+    @CPF
     private String cpf;
 
-    public AutorRequest(String nome, String email, String descricao, String cpf) {
+    public AutorDTO() {}
+
+    public AutorDTO(@NotBlank String nome, @NotBlank @Email String email,
+                    @NotBlank @Size(max = 2500) String descricao, @NotBlank @CPF String cpf) {
         this.nome = nome;
         this.email = email;
         this.descricao = descricao;
         this.cpf = cpf;
-    }
-
-    public AutorRequest() {
     }
 
     public Autor paraAutor() {
@@ -48,4 +52,5 @@ public class AutorRequest {
     public String getCpf() {
         return cpf;
     }
+
 }

@@ -1,46 +1,50 @@
-package br.com.zup.edu.biblioteca.controller;
+package br.com.zup.edu.biblioteca.model;
 
-import br.com.zup.edu.biblioteca.model.Livro;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.validator.constraints.ISBN;
-import org.hibernate.validator.constraints.Length;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import java.time.LocalDate;
+import javax.validation.constraints.Size;
 
-public class LivroRequest {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.hibernate.validator.constraints.ISBN;
+import org.hibernate.validator.constraints.ISBN.Type;
+
+public class LivroDTO {
+
     @NotBlank
-    @Length(max = 200)
+    @Size(max = 200)
     private String titulo;
 
     @NotBlank
-    @Length(max = 4000)
+    @Size(max = 4000)
     private String descricao;
 
     @NotBlank
     @ISBN(type = ISBN.Type.ANY)
     private String isbn;
 
-    @Past
     @NotNull
+    @Past
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataPublicacao;
 
+    public LivroDTO() {}
 
-    public LivroRequest(String titulo, String descricao, String isbn, LocalDate dataPublicacao) {
+    public LivroDTO(@NotBlank @Size(max = 200) String titulo,
+                    @NotBlank @Size(max = 4000) String descricao,
+                    @NotBlank @ISBN(type = Type.ANY) String isbn,
+                    @NotNull @Past LocalDate dataPublicacao) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.isbn = isbn;
         this.dataPublicacao = dataPublicacao;
     }
 
-    public LivroRequest() {
-    }
-
-    public Livro paraLivro(){
-        return new Livro(titulo,descricao,isbn,dataPublicacao);
+    public Livro paraLivro() {
+        return new Livro(titulo, descricao, isbn, dataPublicacao);
     }
 
     public String getTitulo() {
@@ -58,4 +62,5 @@ public class LivroRequest {
     public LocalDate getDataPublicacao() {
         return dataPublicacao;
     }
+
 }
