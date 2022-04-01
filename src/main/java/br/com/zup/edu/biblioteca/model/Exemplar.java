@@ -2,6 +2,7 @@ package br.com.zup.edu.biblioteca.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class Exemplar {
     @ManyToOne(optional = false)
     private Livro livro;
 
+    @Column(nullable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
 
     /**
