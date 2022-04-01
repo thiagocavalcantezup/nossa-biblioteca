@@ -1,6 +1,6 @@
 package br.com.zup.edu.biblioteca.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +20,7 @@ public class Exemplar {
     @ManyToOne(optional = false)
     private Livro livro;
 
-    private LocalDate criadoEm = LocalDate.now();
+    private LocalDateTime criadoEm = LocalDateTime.now();
 
     /**
      * @deprecated Construtor de uso exclusivo do Hibernate
