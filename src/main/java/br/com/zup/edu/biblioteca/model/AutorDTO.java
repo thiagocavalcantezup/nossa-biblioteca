@@ -34,7 +34,9 @@ public class AutorDTO {
     }
 
     public Autor paraAutor() {
-        return new Autor(nome, email, descricao, cpf);
+        String novoCpf = cpf.replaceAll("[^0-9]", "");
+
+        return new Autor(nome, email, descricao, novoCpf);
     }
 
     public String getNome() {

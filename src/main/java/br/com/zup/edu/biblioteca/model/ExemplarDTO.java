@@ -22,7 +22,9 @@ public class ExemplarDTO {
     }
 
     public Exemplar paraExemplar(Livro livro) {
-        return new Exemplar(isbn, livro);
+        String novoIsbn = isbn.replaceAll("[^0-9X]", "");
+
+        return new Exemplar(novoIsbn, livro);
     }
 
     public String getIsbn() {

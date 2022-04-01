@@ -44,7 +44,9 @@ public class LivroDTO {
     }
 
     public Livro paraLivro() {
-        return new Livro(titulo, descricao, isbn, dataPublicacao);
+        String novoIsbn = isbn.replaceAll("[^0-9X]", "");
+
+        return new Livro(titulo, descricao, novoIsbn, dataPublicacao);
     }
 
     public String getTitulo() {
