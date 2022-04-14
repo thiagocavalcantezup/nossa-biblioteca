@@ -2,6 +2,8 @@ package br.com.zup.edu.biblioteca.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -27,6 +29,10 @@ public class LivroDTO {
     private String isbn;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    private TipoCirculacao circulacao;
+
+    @NotNull
     @Past
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataPublicacao;
@@ -36,17 +42,18 @@ public class LivroDTO {
     public LivroDTO(@NotBlank @Size(max = 200) String titulo,
                     @NotBlank @Size(max = 4000) String descricao,
                     @NotBlank @ISBN(type = Type.ANY) String isbn,
-                    @NotNull @Past LocalDate dataPublicacao) {
+                    @NotNull TipoCirculacao circulacao, @NotNull @Past LocalDate dataPublicacao) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.isbn = isbn;
+        this.circulacao = circulacao;
         this.dataPublicacao = dataPublicacao;
     }
 
     public Livro paraLivro() {
         String novoIsbn = isbn.replaceAll("[^0-9X]", "");
 
-        return new Livro(titulo, descricao, novoIsbn, dataPublicacao);
+        return new Livro(titulo, descricao, novoIsbn, circulacao, dataPublicacao);
     }
 
     public String getTitulo() {
@@ -59,6 +66,10 @@ public class LivroDTO {
 
     public String getIsbn() {
         return isbn;
+    }
+
+    public TipoCirculacao getCirculacao() {
+        return circulacao;
     }
 
     public LocalDate getDataPublicacao() {

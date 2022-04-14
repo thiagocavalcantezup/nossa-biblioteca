@@ -35,6 +35,7 @@ public class Livro {
     @ISBN(type = ISBN.Type.ANY)
     private String isbn;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoCirculacao circulacao;
 
@@ -49,11 +50,16 @@ public class Livro {
     public Livro() {}
 
     public Livro(String titulo, String descricao, @ISBN(type = Type.ANY) String isbn,
-                 LocalDate dataPublicacao) {
+                 TipoCirculacao circulacao, @Past LocalDate dataPublicacao) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.isbn = isbn;
+        this.circulacao = circulacao;
         this.dataPublicacao = dataPublicacao;
+    }
+
+    public boolean isCirculacaoLivre() {
+        return circulacao.equals(TipoCirculacao.LIVRE);
     }
 
     public Long getId() {
