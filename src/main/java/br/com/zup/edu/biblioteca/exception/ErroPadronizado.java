@@ -3,6 +3,8 @@ package br.com.zup.edu.biblioteca.exception;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.ConstraintViolation;
+
 import org.springframework.validation.FieldError;
 
 public class ErroPadronizado {
@@ -21,6 +23,12 @@ public class ErroPadronizado {
 
     public void adicionarErro(FieldError fieldError) {
         mensagens.add(fieldError.getField() + ": " + fieldError.getDefaultMessage());
+    }
+
+    public void adicionarErro(ConstraintViolation<?> constraintViolation) {
+        mensagens.add(
+            constraintViolation.getPropertyPath() + ": " + constraintViolation.getMessage()
+        );
     }
 
     public void adicionarErro(String erro) {
