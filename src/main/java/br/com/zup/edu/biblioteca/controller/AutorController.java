@@ -7,9 +7,9 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,9 +45,9 @@ public class AutorController {
     }
 
     @Transactional
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> patch(@PathVariable Long id,
-                                      @RequestBody @Valid AutorDTO autorDTO) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id,
+                                       @RequestBody @Valid AutorDTO autorDTO) {
         Autor autor = autorRepository.findById(id)
                                      .orElseThrow(
                                          () -> new ResponseStatusException(
