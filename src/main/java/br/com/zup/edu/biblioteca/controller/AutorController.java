@@ -2,13 +2,18 @@ package br.com.zup.edu.biblioteca.controller;
 
 import java.net.URI;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.zup.edu.biblioteca.model.Autor;
@@ -37,6 +42,27 @@ public class AutorController {
                                            .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @Transactional
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> patch(@PathVariable Long id,
+                                      @RequestBody @Valid AutorDTO autorDTO) {
+        Autor autor = autorRepository.findById(id)
+                                     .orElseThrow(
+                                         () -> new ResponseStatusException(
+                                             HttpStatus.NOT_FOUND,
+                                             "Não existe um autor com o id informado."
+                                         )
+                                     );
+
+        autor.setNome(autorDTO.getNome());
+        autor.setEmail(autorDTO.getEmail());
+        autor.setDescricao(autorDTO.getDescricao());
+        autor.setCpf(autorDTO.getCpf());
+        autorRepository.save(autor);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
